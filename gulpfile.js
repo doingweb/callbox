@@ -7,7 +7,7 @@ var gulp = require('gulp'),
 gulp.task('develop', function () {
   livereload.listen();
   nodemon({
-    script: 'bin/www',
+    script: 'app/bin/www',
     ext: 'js swig coffee',
   }).on('restart', function () {
     setTimeout(function () {

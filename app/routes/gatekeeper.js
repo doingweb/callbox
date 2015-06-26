@@ -11,7 +11,7 @@ router.get('/', function(req, res) {
 
   twiml
     .gather({
-      action: '/callbox/authenticate'
+      action: '/gatekeeper/authenticate'
     }, function() {
       this.say('Please enter your authentication code, followed by the pound sign.');
     });

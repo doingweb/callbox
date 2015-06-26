@@ -46,7 +46,7 @@ function setupViewEngine() {
 function setupRoutes() {
   app.use('/', require('./routes/root'));
   app.use('/users', require('./routes/user'));
-  app.use('/callbox', require('./routes/callbox'));
+  app.use('/gatekeeper', require('./routes/gatekeeper'));
 }
 
 function forward404ToErrorHandler() {

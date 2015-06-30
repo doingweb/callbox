@@ -2,7 +2,8 @@ var
   twilio = require('twilio'),
   express = require('express'),
   router = express.Router(),
-  speaking = require('../lib/speaking-helpers');
+  speaking = require('../lib/speaking-helpers'),
+  validator = require('../lib/validator');
 
 router.get('/', function(req, res) {
   res.type('xml');
@@ -11,7 +12,7 @@ router.get('/', function(req, res) {
 
   twiml
     .gather({
-      action: '/gatekeeper/authenticate'
+      action: '/gatekeeper'
     }, function() {
       this.say('Please enter your authentication code, followed by the pound sign.');
     });
@@ -19,15 +20,18 @@ router.get('/', function(req, res) {
   res.send(twiml.toString());
 });
 
-router.post('/authenticate', function(req, res) {
+router.post('/', function(req, res) {
   res.type('xml');
-  var digits = req.body['Digits'];
+  var code = req.body['Digits'];
 
   var twiml = new twilio.TwimlResponse();
 
-  // TODO: Validate the code.
-
-  twiml.say(speaking.separateDigits(digits) + ' was not a valid code. Bye now.');
+  if (validator.isValid(code)) {
+    twiml.play({ digits: '9' });
+  } else {
+    twiml.say(speaking.separateDigits(code) + ' was not a valid code. Bye now.');
+    twiml.play({ digits: '#' });
+  }
 
   res.send(twiml.toString());
 });

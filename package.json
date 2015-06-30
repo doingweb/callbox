@@ -24,6 +24,8 @@
     "gulp-nodemon": "~2.0.2",
     "gulp-plumber": "~1.0.0",
     "mocha": "^2.2.5",
+    "proxyquire": "^1.5.0",
+    "sinon": "^1.15.3",
     "supertest": "^1.0.1"
   }
 }

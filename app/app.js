@@ -1,5 +1,7 @@
 var
   express = require('express'),
+  config = require('config'),
+  mongoose = require('mongoose'),
   path = require('path'),
   favicon = require('serve-favicon'),
   logger = require('morgan'),
@@ -8,6 +10,8 @@ var
   swig = require('swig');
 
 var app = express();
+
+mongoose.connect(config.get('database.url'));
 
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
@@ -45,7 +49,6 @@ function setupViewEngine() {
 
 function setupRoutes() {
   app.use('/', require('./routes/root'));
-  app.use('/users', require('./routes/user'));
   app.use('/gatekeeper', require('./routes/gatekeeper'));
 }
 

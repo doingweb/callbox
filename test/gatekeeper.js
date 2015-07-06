@@ -22,7 +22,7 @@ describe('Gatekeeper', function() {
   });
 
   describe('picking up a call', function() {
-    it('should greet the user and gather authentication code numbers', function(done) {
+    it('should greet the user and gather entry code numbers', function(done) {
       request(app)
         .get('/gatekeeper')
         .expect('Content-Type', /xml/)
@@ -31,7 +31,7 @@ describe('Gatekeeper', function() {
           expect(res.text).xml.to.deep.equal(
             '<Response>' +
               '<Gather action="/gatekeeper">' +
-                '<Say>Please enter your authentication code, followed by the pound sign.</Say>' +
+                '<Say>Please dial your entry code, followed by the pound sign.</Say>' +
               '</Gather>' +
             '</Response>');
         })
@@ -39,7 +39,7 @@ describe('Gatekeeper', function() {
     });
   });
 
-  describe('receiving an authentication code', function() {
+  describe('receiving an entry code', function() {
     it('should let the visitor in if the code is valid', function(done) {
       var validCode = '123';
       validatorStub.isValid.returns(true);

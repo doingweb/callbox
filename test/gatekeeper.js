@@ -5,6 +5,7 @@ var
   chaiXml = require('chai-xml'),
   sinon = require('sinon'),
   proxyquire =  require('proxyquire'),
+  Q = require('q'),
   speaking = require('../app/lib/speaking-helpers');
 
 chai.use(chaiXml);
@@ -16,9 +17,8 @@ describe('Gatekeeper', function() {
       '../lib/validator': validatorStub
     });
 
-  beforeEach(function(done) {
+  beforeEach(function() {
     validatorStub.isValid = sinon.stub();
-    done();
   });
 
   describe('picking up a call', function() {
@@ -42,7 +42,7 @@ describe('Gatekeeper', function() {
   describe('receiving an entry code', function() {
     it('should let the visitor in if the code is valid', function(done) {
       var validCode = '123';
-      validatorStub.isValid.returns(true);
+      validatorStub.isValid.returns(Q.fcall(function() { return true; }));
 
       request(app)
         .post('/gatekeeper')
@@ -60,7 +60,7 @@ describe('Gatekeeper', function() {
 
     it('should reject the visitor and deny entry if the code is invalid', function(done) {
       var invalidCode = '123';
-      validatorStub.isValid.returns(false);
+      validatorStub.isValid.returns(Q.fcall(function() { return false; }));
 
       request(app)
         .post('/gatekeeper')

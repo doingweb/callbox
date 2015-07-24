@@ -24,13 +24,15 @@ module.exports = {
 
     var twiml = new twilio.TwimlResponse();
 
-    if (validator.isValid(code)) {
-      twiml.play({ digits: '9' });
-    } else {
-      twiml.say(speaking.separateDigits(code) + ' was not a valid code. Bye now.');
-      twiml.play({ digits: '#' });
-    }
+    validator.isValid(code).then(function(isValid) {
+      if (isValid) {
+        twiml.play({ digits: '9' });
+      } else {
+        twiml.say(speaking.separateDigits(code) + ' was not a valid code. Bye now.');
+        twiml.play({ digits: '#' });
+      }
 
-    res.send(twiml.toString());
+      res.send(twiml.toString());
+    });
   }
 };

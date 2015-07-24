@@ -4,9 +4,9 @@ var
 
 var EntryCodeSchema = new Schema({
   code: String,
-  start: { type: Date, default: Date.now },
-  end: { type: Date, default: Date.now },
-  createdAt: { type: Date, default: Date.now }
+  start: { type: Date },
+  end: { type: Date },
+  createdAt: { type: Date, default: Date.now },
   createdBy: { type: Schema.Types.ObjectId, ref: 'User' }
 });
 

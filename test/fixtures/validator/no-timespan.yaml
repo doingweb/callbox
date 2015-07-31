@@ -1,0 +1,4 @@
+data:
+  - code: "123"
+input: "123"
+expected: true

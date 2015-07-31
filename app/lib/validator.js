@@ -1,14 +1,17 @@
 var
   EntryCode = require('../models/entry-code');
 
-function isValid(code) {
-  return EntryCode.find({}).then(function(entryCodes) {
+function checkValidity(code) {
+  return EntryCode.find()
+    .then(anyEntryCodeMatches);
+
+  function anyEntryCodeMatches(entryCodes) {
     return entryCodes.some(function(entryCode) {
       return entryCode.code === code;
     });
-  });
+  }
 }
 
 module.exports = {
-  isValid: isValid
+  checkValidity: checkValidity
 };

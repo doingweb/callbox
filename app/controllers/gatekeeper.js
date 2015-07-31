@@ -24,7 +24,7 @@ module.exports = {
 
     var twiml = new twilio.TwimlResponse();
 
-    validator.isValid(code).then(function(isValid) {
+    validator.checkValidity(code).then(function(isValid) {
       if (isValid) {
         twiml.play({ digits: '9' });
       } else {

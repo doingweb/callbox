@@ -18,7 +18,7 @@ describe('Gatekeeper', function() {
     });
 
   beforeEach(function() {
-    validatorStub.isValid = sinon.stub();
+    validatorStub.checkValidity = sinon.stub();
   });
 
   describe('picking up a call', function() {
@@ -42,7 +42,7 @@ describe('Gatekeeper', function() {
   describe('receiving an entry code', function() {
     it('should let the visitor in if the code is valid', function(done) {
       var validCode = '123';
-      validatorStub.isValid.returns(Q.fcall(function() { return true; }));
+      validatorStub.checkValidity.returns(Q.fcall(function() { return true; }));
 
       request(app)
         .post('/gatekeeper')
@@ -60,7 +60,7 @@ describe('Gatekeeper', function() {
 
     it('should reject the visitor and deny entry if the code is invalid', function(done) {
       var invalidCode = '123';
-      validatorStub.isValid.returns(Q.fcall(function() { return false; }));
+      validatorStub.checkValidity.returns(Q.fcall(function() { return false; }));
 
       request(app)
         .post('/gatekeeper')
